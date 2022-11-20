@@ -19,10 +19,18 @@ repositories {
 }
 
 dependencies {
+	// spring web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// TestContainers
+	testImplementation 'org.testcontainers:junit-jupiter:1.17.4'
 }
 
 tasks.named('test') {
