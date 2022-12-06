@@ -8,7 +8,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-class RedisTestContaners {
+class TestContanersRedisTest {
 
 	@Container
 	public GenericContainer redis = new GenericContainer("redis:7.0.5")
