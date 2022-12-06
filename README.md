@@ -4,9 +4,11 @@
 Java : 17  
 Spring Boot : 2.7.5  
 
-### docker-compose를 활용하여 redis 사용하기
-```bash
+---
 
+### docker-compose를 활용하여 redis 사용하기
+
+```bash
 # 도커 컴포즈를 활용하여 redis 컨테이너 실행
 ## 백그라운드 실행 시 -d 옵션 추가
 ## 레디스 옵션 설정하려면 ./container/conf/redis.conf 를 수정
@@ -79,6 +81,97 @@ class RedisTestContaners {
 	void testContainers_실행확인() {
 		assertThat(redis.getHost()).isEqualTo("localhost");
 		assertThat(redis.getExposedPorts()).contains(6379);
+	}
+}
+```
+
+---
+
+### embedded redis를 활용하여 redis & Spring Data Redis 사용하기
+
+1. embedded redis & Spring Data Redis 의존성 추가
+
+
+```
+# build.gradle
+
+dependencies {
+	// ...
+  
+  	// Spring Data Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+		
+	// Embedded Redis DB : it.ozimov
+	testImplementation 'it.ozimov:embedded-redis:0.7.3' exclude group: 'org.slf4j', module: 'slf4j-simple'
+
+}
+```
+
+2. embedded redis 설정
+
+```java
+// src/test/java/kim/ku/redis/config/EmbeddedRedisConfig.java
+// Embedded Redis 서버를 설정하고 실행한다. 해당 빈이 끝날 때 제거한다.
+
+@TestConfiguration
+public class EmbeddedRedisConfig {
+
+	@Value("${spring.redis.port}")
+	private int redisPort;
+
+	private RedisServer redisServer;
+
+	@PostConstruct
+	public void redisServer() throws IOException {
+		int port = isRedisRunning() ? getRandomPort() : redisPort;
+		redisServer = new RedisServer(port);
+		redisServer.start();
+	}
+
+	@PreDestroy
+	public void stopRedis() {
+		redisServer.stop();
+	}
+
+	// 생략
+}
+```
+
+```yaml
+# src/test/resources/application-embedded.yml
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
+```
+
+3. Spring Data Redis 설정
+
+```java 
+// src/main/java/kim/ku/redis/config/RedisRepositoryConfig.java
+// 클라이언트는 Lettuce를 사용한다.
+
+@TestConfiguration
+@EnableRedisRepositories
+public class RedisRepositoryConfig {
+
+	@Value("${spring.redis.host}")
+	private String redisHost;
+
+	@Value("${spring.redis.port}")
+	private int port;
+
+	@Bean
+	public RedisConnectionFactory redisConnectionFactory() {
+		return new LettuceConnectionFactory(redisHost, port);
+	}
+
+	@Bean
+	public RedisTemplate<?, ?> redisTemplate() {
+		RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		return redisTemplate;
 	}
 }
 ```
