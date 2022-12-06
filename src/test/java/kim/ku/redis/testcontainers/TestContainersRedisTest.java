@@ -8,7 +8,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-class TestContanersRedisTest {
+class TestContainersRedisTest {
 
 	@Container
 	public GenericContainer redis = new GenericContainer("redis:7.0.5")
@@ -19,4 +19,5 @@ class TestContanersRedisTest {
 		assertThat(redis.getHost()).isEqualTo("localhost");
 		assertThat(redis.getExposedPorts()).contains(6379);
 	}
+
 }
