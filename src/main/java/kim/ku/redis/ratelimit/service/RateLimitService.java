@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class RateLimitService {
 	public static final int API_MAXIMUN_COUNT = 30;
 	private final StringRedisTemplate redisTemplate;
 
-
+	@Transactional
 	public boolean isAllowed(String clientIp) {
 		long apiCount = getApiCount(clientIp);
 
