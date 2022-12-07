@@ -1,4 +1,4 @@
-package kim.ku.redis.testcontainers;
+package kim.ku.redis.connectiontest.testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

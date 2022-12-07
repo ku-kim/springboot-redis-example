@@ -1,4 +1,4 @@
-package kim.ku.redis.domain;
+package kim.ku.redis.connectiontest.domain;
 
 import org.springframework.data.repository.CrudRepository;
 

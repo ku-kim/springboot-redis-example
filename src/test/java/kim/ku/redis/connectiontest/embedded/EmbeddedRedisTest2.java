@@ -1,23 +1,24 @@
-package kim.ku.redis.embedded;
+package kim.ku.redis.connectiontest.embedded;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import kim.ku.redis.config.EmbeddedRedisConfig;
-import kim.ku.redis.domain.Point;
-import kim.ku.redis.domain.PointRedisRepository;
+import kim.ku.redis.connectiontest.domain.Point;
+import kim.ku.redis.connectiontest.domain.PointRedisRepository;
 import kim.ku.redis.config.RedisRepositoryConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Import({EmbeddedRedisConfig.class, RedisRepositoryConfig.class})
 @ActiveProfiles("embedded")
-class EmbeddedRedisTest {
+class EmbeddedRedisTest2 {
 
 	@Autowired
 	private PointRedisRepository pointRedisRepository;
