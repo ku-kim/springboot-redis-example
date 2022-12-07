@@ -2,3 +2,17 @@ spring:
   redis:
     host: localhost
     port: 6379
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    jdbc-url: jdbc:h2:mem:testdb;
+    username: sa
+    password: 1234
+  h2:
+    console:
+      enabled: true
+
+sql:
+  init:
+    mode: always
+    encoding: UTF-8
