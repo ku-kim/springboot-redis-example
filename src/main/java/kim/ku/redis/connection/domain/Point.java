@@ -1,4 +1,4 @@
-package kim.ku.redis.connectiontest.domain;
+package kim.ku.redis.connection.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

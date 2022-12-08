@@ -18,14 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class RateLimitService {
 
 	public static final int LIMIT_MINUTES = 5;
-	public static final int API_MAXIMUN_COUNT = 30;
+	public static final int API_MAXIMUM_COUNT = 30;
 	private final StringRedisTemplate redisTemplate;
 
 	@Transactional
 	public boolean isAllowed(String clientIp) {
 		long apiCount = getApiCount(clientIp);
 
-		if (apiCount >= API_MAXIMUN_COUNT) {
+		if (apiCount >= API_MAXIMUM_COUNT) {
 			return false;
 		} else {
 			incrementApiCount(clientIp);

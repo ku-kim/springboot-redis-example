@@ -4,9 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import kim.ku.redis.config.EmbeddedRedisConfig;
-import kim.ku.redis.connectiontest.domain.PointRedisRepository;
-import kim.ku.redis.connectiontest.domain.Point;
-import kim.ku.redis.config.RedisRepositoryConfig;
+import kim.ku.redis.connection.domain.PointRedisRepository;
+import kim.ku.redis.connection.domain.Point;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-@Import({EmbeddedRedisConfig.class, RedisRepositoryConfig.class})
+@Import({EmbeddedRedisConfig.class})
 @ActiveProfiles("embedded")
 class EmbeddedRedisTest {
 
