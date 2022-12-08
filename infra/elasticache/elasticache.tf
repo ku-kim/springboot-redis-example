@@ -29,6 +29,9 @@ resource "aws_elasticache_cluster" "redis-terraform-test" {
   parameter_group_name = "default.redis7" # 파라미터 그룹
   engine_version       = "7.0" # 레디스 버전
   port                 = 6379
+  security_group_ids = [
+    aws_security_group.infra_test_redis_security_group.id
+  ]
 
   subnet_group_name    = aws_elasticache_subnet_group.infra_test_vpc_subnet_group.name
 }
